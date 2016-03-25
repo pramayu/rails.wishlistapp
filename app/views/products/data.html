@@ -1,0 +1,3 @@
+			<div class="">
+				<%= select_tag("product[collection_ids][]", options_for_select(current_user.collections.collect {|collection| [collection.name, collection.id]}, @product.collections.collect { |collection| collection.id }), {multiple: true, size: 5, class: "form-control"}) %>
+			</div>

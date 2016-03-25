@@ -8,6 +8,9 @@
 </head>
 <body>
 <div class="navbar navbar-default">
+	<div class="navbar-header">
+		<%= link_to "ChkBox", root_path, class: "navbar-brand" %>
+	</div>
 	<ul class="nav navbar-nav pull-right">
 		<% if user_signed_in? %>
 			<li><a href="#"><%= current_user.email %></a></li>
