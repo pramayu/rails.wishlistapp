@@ -1,0 +1,10 @@
+<% @colls.each do |coll| %>
+	<% if user_signed_in? && current_user.id == coll.user.id %>
+		<p><%= coll.name %></p>
+		<% coll.products.each do |product| %>
+			<ul>
+				<li><%= product.name %></li>
+			</ul>
+		<% end %>
+	<% end %>
+<% end %>

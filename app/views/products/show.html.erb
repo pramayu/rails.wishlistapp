@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @product.name %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @product.price %>
+</p>
+
+<p>
+  <strong>Desc:</strong>
+  <%= @product.desc %>
+</p>
+<%= form_for @product do |f| %>
+<div class="form-group">
+	<p>Compatible Browser</p>
+	<%= select_tag("product[collection_ids][]", options_for_select(current_user.collections.collect {|collection| [collection.name, collection.id]}, @product.collections.collect { |collection| collection.id }), {multiple: true, size: 5, class: "form-control"}) %>
+</div>
+<div class="action">
+	<%= f.submit "Save" %>
+</div>
+<% end %>
+<%= link_to 'Edit', edit_product_path(@product) %> |
+<%= link_to 'Back', products_path %>
