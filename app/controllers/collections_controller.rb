@@ -16,8 +16,14 @@ class CollectionsController < ApplicationController
 
 	def create
 		@coll = current_user.collections.build(coll_params)
-		@coll.save
 		redirect_to collections_path
+		respond_to do |format|
+			if @coll.save
+				format.js
+			else
+				format.js
+			end
+		end
 	end
 
 	def edit

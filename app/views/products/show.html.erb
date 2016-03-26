@@ -26,24 +26,23 @@
         <div class="modal-title" id="myModalLabel">
         	<h4 class="text-center">Add this Item</h4>
         	<h5 class="text-center"><%= @product.name %></h5>
+        	<p class="saved text-center">Saved</p>
         </div>
       </div>
       <div class="modal-body">
-      	<% if current_user.collections.blank? %>
-			<h4 class="text-center"><%= link_to "Create Collection", new_collection_path %></h4>
-      	<% else %>
-	        <%= form_for @product do |f| %>
-				<div class="form-group">
-				    <%= hidden_field_tag "product[collection_ids][]", nil %>
-				    <% current_user.collections.each do |collection| %>
-				      <%= check_box_tag "product[collection_ids][]", collection.id, @product.collection_ids.include?(collection.id), id: dom_id(collection) %>
-				      <%= label_tag dom_id(collection), collection.name %><br>
-				    <% end %>
-				</div>
-				<div class="action">
-					<%= f.submit "Save" %>
-				</div>
-			<% end %>
+        <%= form_for @product, remote: true do |f| %>
+			<div class="form-group">
+			    <%= hidden_field_tag "product[collection_ids][]", nil %>
+			    <div id="coll-render">
+				    <%= render 'collections/coll' %>
+			    </div>
+			</div>
+		<% end %>
+		<%= form_for @coll, remote:true do |f| %>
+			<div class="form-group">
+				<%= f.text_field :name, class: "form-control", placeholder: "create collection name", label: false %>
+			</div>
+			<%= f.submit "save" %>
 		<% end %>
       </div>
       <div class="modal-footer">
@@ -53,3 +52,16 @@
     </div>
   </div>
 </div>
+
+
+<script>
+$(document)	.ready(function(){
+	$('.saved').fadeOut();
+	<% current_user.collections.each do |collection| %>
+		$('#collection_<%= collection.id %>').click(function(){
+			$(this).parents('form:first').submit();
+			$('.saved').fadeIn().delay(800).fadeOut();
+		});
+	<% end %>
+ });
+</script>

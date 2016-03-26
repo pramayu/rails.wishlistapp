@@ -1,0 +1,4 @@
+<% current_user.collections.each do |collection| %>
+<%= check_box_tag "product[collection_ids][]", collection.id, @product.collection_ids.include?(collection.id), id: dom_id(collection) %>
+<%= label_tag dom_id(collection), collection.name %><br>
+<% end %>
